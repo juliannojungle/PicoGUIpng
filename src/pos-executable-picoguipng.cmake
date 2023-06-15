@@ -3,7 +3,7 @@ set(CMAKE_C_COMPILER /usr/bin/arm-none-eabi-gcc)
 set(CMAKE_CXX_COMPILER /usr/bin/arm-none-eabi-g++)
 
 ###### Waveshare Pico_code/c/lib/GUI for graphics
-set(PICO_CODE_LIB ${CMAKE_SOURCE_DIR}/src/Dependency/Pico_code/c/lib)
+set(PICO_CODE_LIB ${CMAKE_SOURCE_DIR}/src/lib)
 add_subdirectory(${PICO_CODE_LIB}/Config)
 add_subdirectory(${PICO_CODE_LIB}/GUI)
 include_directories(${PICO_CODE_LIB}/Config)

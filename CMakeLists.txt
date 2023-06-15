@@ -4,6 +4,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 14)
 
 # initialization
+# set(PICO_SDK_FETCH_FROM_GIT ON)
 include(${CMAKE_SOURCE_DIR}/src/Dependency/pico_sdk_import.cmake)
 
 # project definition
