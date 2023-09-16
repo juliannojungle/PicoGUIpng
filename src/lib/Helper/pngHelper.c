@@ -1,14 +1,16 @@
-extern "C" {
-    #include "ff.h" // FS functions and declarations.
-    #include <setjmp.h>
-    #include <png.h>
-    #define PNG_READ_SUPPORTED
+#ifndef _PNG_HELPER_C_
+#define _PNG_HELPER_C_
 
-    #include "DEV_Config.c"
-    #include "LCD_1in28.c"
-    #include "font20.c"
-    #include "GUI_Paint.h"
-}
+#include "ff.h" // FS functions and declarations.
+#include <setjmp.h>
+#include <png.h>
+#define PNG_READ_SUPPORTED
+
+#include "Driver.c"
+#include "Platform.c"
+#include "LCD_1in28.c"
+#include "font20.c"
+#include "GUI_Paint.h"
 
 typedef struct {
     FIL *file;
@@ -19,8 +21,9 @@ void custom_read_data(png_structrp png_ptr, png_bytep data, size_t length) {
     printf("Custom read data...\n");
 #endif
     UINT bytesRead;
-    custom_file *filep = (custom_file*)png_get_io_ptr(png_ptr);
-    f_read(filep->file, data, length, &bytesRead);
+    // custom_file *filep = (custom_file*)png_get_io_ptr(png_ptr);
+    // f_read(filep->file, data, length, &bytesRead);
+    f_read((FIL*)png_get_io_ptr(png_ptr), data, length, &bytesRead);
 }
 
 static void error(png_structp png_ptr, const char *message)
@@ -28,7 +31,7 @@ static void error(png_structp png_ptr, const char *message)
     printf("Error from libpng: %s\n", message);
 }
 
-void DisplayPng(FIL &file) {
+void DisplayPng(FIL *file) {
 #if _DEBUG
     printf("Creating read structure...\n");
 #endif
@@ -53,9 +56,10 @@ void DisplayPng(FIL &file) {
 #if _DEBUG
     printf("Setting up the custom read function...\n");
 #endif
-    custom_file filep;
-    filep.file = &file;
-    png_set_read_fn(png_ptr, &filep, custom_read_data);
+    // custom_file filep;
+    // filep.file = &file;
+    // png_set_read_fn(png_ptr, &filep, custom_read_data);
+    png_set_read_fn(png_ptr, file, custom_read_data);
 
 #if _DEBUG
     printf("Setting up LongJump...\n");
@@ -89,24 +93,24 @@ void DisplayPng(FIL &file) {
 
     printf("Initialize display...\n");
 #endif
-    if (DEV_Module_Init() != 0) {
+
+    /* LCD Init */
+    if (LCD_1IN28_Init(HORIZONTAL) != 0) {
         png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
         return;
     }
 
-    /* LCD Init */
-    LCD_1IN28_Init(HORIZONTAL);
     LCD_1IN28_Clear(BLACK);
 
-    png_bytep row_pointers(NULL);
+    png_bytep row_pointers = NULL;
     int col, row;
-    int maxCol(width > LCD_1IN28.WIDTH ? LCD_1IN28.WIDTH : width);     // won't print outside display.
-    int maxRow(height > LCD_1IN28.HEIGHT ? LCD_1IN28.HEIGHT : height); // won't print outside display.
+    int maxCol = width > LCD_1IN28.WIDTH ? LCD_1IN28.WIDTH : width;     // won't print outside display.
+    int maxRow = height > LCD_1IN28.HEIGHT ? LCD_1IN28.HEIGHT : height; // won't print outside display.
 
     // ####### LCD_1IN28_Display #######
     LCD_1IN28_SetWindows(0, 0, maxCol, maxRow);
-    DEV_Digital_Write(EPD_DC_PIN, 1);
-    DEV_Digital_Write(EPD_CS_PIN, 0);
+    DigitalWrite(EPD_DC_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 0);
 
     int num_palette = 0;
     png_colorp palette = NULL;
@@ -135,15 +139,15 @@ void DisplayPng(FIL &file) {
             }
 
             /* The LCD uses RGB565 16-bits format: RRRRRGGG GGGBBBBB */
-            DEV_SPI_WriteByte((red & 0b11111000) | ((green & 0b11100000) >> 5));
-            DEV_SPI_WriteByte(((green & 0b00011100) << 3) | ((blue & 0b11111000) >> 3));
+            SPIWriteByte((red & 0b11111000) | ((green & 0b11100000) >> 5));
+            SPIWriteByte(((green & 0b00011100) << 3) | ((blue & 0b11111000) >> 3));
         }
 
         free(row_pointers);
         row_pointers = NULL;
     }
 
-    DEV_Digital_Write(EPD_CS_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 1);
     LCD_1IN28_SendCommand(0x29);
     // ####### LCD_1IN28_Display #######
 
@@ -152,18 +156,20 @@ void DisplayPng(FIL &file) {
     printf("Turning on backlight...\n");
 #endif
     EPD_BL_PIN = 25;
-    DEV_GPIO_Mode(EPD_BL_PIN, GPIO_OUT);
-    DEV_Digital_Write(EPD_CS_PIN, 1);
-    DEV_Digital_Write(EPD_DC_PIN, 0);
-    DEV_Digital_Write(EPD_BL_PIN, 1);
+    DriverGPIOMode(EPD_BL_PIN, GPIO_OUT);
+    DigitalWrite(EPD_CS_PIN, 1);
+    DigitalWrite(EPD_DC_PIN, 0);
+    DigitalWrite(EPD_BL_PIN, 1);
 
 #if _DEBUG
     printf("DEV_Module_Exit...\n");
 #endif
-    DEV_Module_Exit();
+    DriverExit();
 
 #if _DEBUG
     printf("Done! Destroying read struct...\n");
 #endif
     png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
 }
+
+#endif

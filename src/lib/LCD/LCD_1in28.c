@@ -12,10 +12,6 @@
 *
 ******************************************************************************/
 #include "LCD_1in28.h"
-#include "DEV_Config.h"
-
-#include <stdlib.h> //itoa()
-#include <stdio.h>
 
 LCD_1IN28_ATTRIBUTES LCD_1IN28;
 
@@ -25,12 +21,12 @@ parameter:
 ******************************************************************************/
 static void LCD_1IN28_Reset(void)
 {
-    DEV_Digital_Write(EPD_RST_PIN, 1);
-    DEV_Delay_ms(100);
-    DEV_Digital_Write(EPD_RST_PIN, 0);
-    DEV_Delay_ms(100);
-    DEV_Digital_Write(EPD_RST_PIN, 1);
-    DEV_Delay_ms(100);
+    DigitalWrite(EPD_RST_PIN, 1);
+    Delay(100);
+    DigitalWrite(EPD_RST_PIN, 0);
+    Delay(100);
+    DigitalWrite(EPD_RST_PIN, 1);
+    Delay(100);
 }
 
 /******************************************************************************
@@ -40,10 +36,10 @@ parameter:
 ******************************************************************************/
 static void LCD_1IN28_SendCommand(UBYTE Reg)
 {
-    DEV_Digital_Write(EPD_DC_PIN, 0);
-    DEV_Digital_Write(EPD_CS_PIN, 0);
-    DEV_SPI_WriteByte(Reg);
-    DEV_Digital_Write(EPD_CS_PIN, 1);
+    DigitalWrite(EPD_DC_PIN, 0);
+    DigitalWrite(EPD_CS_PIN, 0);
+    SPIWriteByte(Reg);
+    DigitalWrite(EPD_CS_PIN, 1);
 }
 
 /******************************************************************************
@@ -53,10 +49,10 @@ parameter:
 ******************************************************************************/
 static void LCD_1IN28_SendData_8Bit(UBYTE Data)
 {
-    DEV_Digital_Write(EPD_DC_PIN, 1);
-    DEV_Digital_Write(EPD_CS_PIN, 0);
-    DEV_SPI_WriteByte(Data);
-    DEV_Digital_Write(EPD_CS_PIN, 1);
+    DigitalWrite(EPD_DC_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 0);
+    SPIWriteByte(Data);
+    DigitalWrite(EPD_CS_PIN, 1);
 }
 
 /******************************************************************************
@@ -66,11 +62,11 @@ parameter:
 ******************************************************************************/
 static void LCD_1IN28_SendData_16Bit(UWORD Data)
 {
-    DEV_Digital_Write(EPD_DC_PIN, 1);
-    DEV_Digital_Write(EPD_CS_PIN, 0);
-    DEV_SPI_WriteByte((Data >> 8) & 0xFF);
-    DEV_SPI_WriteByte(Data & 0xFF);
-    DEV_Digital_Write(EPD_CS_PIN, 1);
+    DigitalWrite(EPD_DC_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 0);
+    SPIWriteByte((Data >> 8) & 0xFF);
+    SPIWriteByte(Data & 0xFF);
+    DigitalWrite(EPD_CS_PIN, 1);
 }
 
 /******************************************************************************
@@ -81,7 +77,7 @@ static void LCD_1IN28_InitReg(void)
 {
     LCD_1IN28_SendCommand(0x11); /* Sleep mode OFF */
 
-    DEV_Delay_ms(120); /* Delay 120ms */
+    Delay(120); /* Delay 120ms */
 
     LCD_1IN28_SendCommand(0xEF); /* Inter register enable 2 */
 
@@ -338,11 +334,11 @@ static void LCD_1IN28_InitReg(void)
 
     LCD_1IN28_SendCommand(0x11); /* Sleep mode OFF */
 
-    DEV_Delay_ms(12); /* Delay 12ms */
+    Delay(12); /* Delay 12ms */
 
     LCD_1IN28_SendCommand(0x29); /* Display ON */
 
-    DEV_Delay_ms(20); /* Delay 20ms */
+    Delay(20); /* Delay 20ms */
 }
 
 /********************************************************************************
@@ -376,9 +372,14 @@ static void LCD_1IN28_SetAttributes(UBYTE Scan_dir)
 function : Initialize the lcd
 parameter:
 ********************************************************************************/
-void LCD_1IN28_Init(UBYTE Scan_dir)
+int LCD_1IN28_Init(UBYTE Scan_dir)
 {
-    DEV_SET_PWM(90);
+    int driverResult = DriverInit();
+
+    if (driverResult != 0)
+        return driverResult;
+
+    DriverSetPWM(90);
     //Hardware reset
     LCD_1IN28_Reset();
 
@@ -387,6 +388,8 @@ void LCD_1IN28_Init(UBYTE Scan_dir)
 
     //Set the initialization register
     LCD_1IN28_InitReg();
+
+    return 0;
 }
 
 /********************************************************************************
@@ -433,15 +436,14 @@ void LCD_1IN28_Clear(UWORD Color)
     }
 
     LCD_1IN28_SetWindows(0, 0, LCD_1IN28.WIDTH, LCD_1IN28.HEIGHT);
-    DEV_Digital_Write(EPD_DC_PIN, 1);
-    DEV_Digital_Write(EPD_CS_PIN, 0);
-    // printf("HEIGHT %d, WIDTH %d\r\n",LCD_1IN28.HEIGHT,LCD_1IN28.WIDTH);
+    DigitalWrite(EPD_DC_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 0);
 
     for (j = 0; j < LCD_1IN28.HEIGHT; j++) {
-        DEV_SPI_Write_nByte((uint8_t *)&Image[j*LCD_1IN28.WIDTH], LCD_1IN28.WIDTH*2);
+        SPIWriteNByte((uint8_t *)&Image[j*LCD_1IN28.WIDTH], LCD_1IN28.WIDTH*2);
     }
 
-    DEV_Digital_Write(EPD_CS_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 1);
 }
 
 /******************************************************************************
@@ -452,32 +454,31 @@ void LCD_1IN28_Display(UWORD *Image)
 {
     UWORD j;
     LCD_1IN28_SetWindows(0, 0, LCD_1IN28.WIDTH, LCD_1IN28.HEIGHT);
-    DEV_Digital_Write(EPD_DC_PIN, 1);
-    DEV_Digital_Write(EPD_CS_PIN, 0);
+    DigitalWrite(EPD_DC_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 0);
 
     for (j = 0; j < LCD_1IN28.HEIGHT; j++) {
-        DEV_SPI_Write_nByte((uint8_t *)&Image[j*LCD_1IN28.WIDTH], LCD_1IN28.WIDTH*2);
+        SPIWriteNByte((uint8_t *)&Image[j*LCD_1IN28.WIDTH], LCD_1IN28.WIDTH*2);
     }
 
-    DEV_Digital_Write(EPD_CS_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 1);
     LCD_1IN28_SendCommand(0x29);
 }
 
 void LCD_1IN28_DisplayWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend, UWORD *Image)
 {
-    // display
     UDOUBLE Addr = 0;
     UWORD j;
     LCD_1IN28_SetWindows(Xstart, Ystart, Xend , Yend);
-    DEV_Digital_Write(EPD_DC_PIN, 1);
-    DEV_Digital_Write(EPD_CS_PIN, 0);
+    DigitalWrite(EPD_DC_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 0);
 
     for (j = Ystart; j < Yend - 1; j++) {
         Addr = Xstart + j * LCD_1IN28.WIDTH ;
-        DEV_SPI_Write_nByte((uint8_t *)&Image[Addr], (Xend-Xstart)*2);
+        SPIWriteNByte((uint8_t *)&Image[Addr], (Xend-Xstart)*2);
     }
 
-    DEV_Digital_Write(EPD_CS_PIN, 1);
+    DigitalWrite(EPD_CS_PIN, 1);
 }
 
 void LCD_1IN28_DisplayPoint(UWORD X, UWORD Y, UWORD Color)
@@ -490,6 +491,6 @@ void Handler_1IN28_LCD(int signo)
 {
     //System Exit
     printf("\r\nHandler:Program stop\r\n");
-    DEV_Module_Exit();
+    DriverExit();
     exit(0);
 }

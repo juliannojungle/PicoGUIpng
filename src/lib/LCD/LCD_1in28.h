@@ -14,9 +14,9 @@
 #ifndef __LCD_1IN28_H
 #define __LCD_1IN28_H
 
-#include "DEV_Config.h"
+#include "Platform.c"
+#include "Driver.c"
 #include <stdint.h>
-
 #include <stdlib.h> //itoa()
 #include <stdio.h>
 
@@ -35,11 +35,7 @@ typedef struct{
 }LCD_1IN28_ATTRIBUTES;
 extern LCD_1IN28_ATTRIBUTES LCD_1IN28;
 
-/********************************************************************************
-function:
-    Macro definition variable name
-********************************************************************************/
-void LCD_1IN28_Init(UBYTE Scan_dir);
+int LCD_1IN28_Init(UBYTE Scan_dir);
 void LCD_1IN28_Clear(UWORD Color);
 void LCD_1IN28_Display(UWORD *Image);
 void LCD_1IN28_DisplayWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend, UWORD *Image);

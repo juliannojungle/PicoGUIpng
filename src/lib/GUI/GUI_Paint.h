@@ -1,7 +1,7 @@
 #ifndef __GUI_PAINT_H
 #define __GUI_PAINT_H
 
-#include "DEV_Config.h"
+#include "Platform.c"
 #include "../Fonts/fonts.h"
 
 /**
@@ -67,25 +67,25 @@ typedef enum {
  * The size of the point
 **/
 typedef enum {
-    DOT_PIXEL_1X1  = 1,	// 1 x 1
-    DOT_PIXEL_2X2  , 		// 2 X 2
-    DOT_PIXEL_3X3  ,		// 3 X 3
-    DOT_PIXEL_4X4  ,		// 4 X 4
-    DOT_PIXEL_5X5  , 		// 5 X 5
-    DOT_PIXEL_6X6  , 		// 6 X 6
-    DOT_PIXEL_7X7  , 		// 7 X 7
-    DOT_PIXEL_8X8  , 		// 8 X 8
+    DOT_PIXEL_1X1  = 1, // 1 x 1
+    DOT_PIXEL_2X2  ,    // 2 X 2
+    DOT_PIXEL_3X3  ,    // 3 X 3
+    DOT_PIXEL_4X4  ,    // 4 X 4
+    DOT_PIXEL_5X5  ,    // 5 X 5
+    DOT_PIXEL_6X6  ,    // 6 X 6
+    DOT_PIXEL_7X7  ,    // 7 X 7
+    DOT_PIXEL_8X8  ,    // 8 X 8
 } DOT_PIXEL;
-#define DOT_PIXEL_DFT  DOT_PIXEL_1X1  //Default dot pilex
+#define DOT_PIXEL_DFT  DOT_PIXEL_1X1  //Default dot pixel
 
 /**
  * Point size fill style
 **/
 typedef enum {
-    DOT_FILL_AROUND  = 1,		// dot pixel 1 x 1
-    DOT_FILL_RIGHTUP  , 		// dot pixel 2 X 2
+    DOT_FILL_AROUND  = 1,   // dot pixel 1 x 1
+    DOT_FILL_RIGHTUP  ,     // dot pixel 2 X 2
 } DOT_STYLE;
-#define DOT_STYLE_DFT  DOT_FILL_AROUND  //Default dot pilex
+#define DOT_STYLE_DFT  DOT_FILL_AROUND  //Default dot pixel
 
 /**
  * Line style, solid or dashed
@@ -146,13 +146,6 @@ void Paint_DrawBitMap_Block(const unsigned char* image_buffer, UBYTE Region);
 
 void Paint_DrawImage(const unsigned char *image, UWORD xStart, UWORD yStart, UWORD W_Image, UWORD H_Image) ;
 void Paint_DrawImage1(const unsigned char *image, UWORD xStart, UWORD yStart, UWORD W_Image, UWORD H_Image);
- void Paint_BmpWindows(unsigned char x,unsigned char y,const unsigned char *pBmp,\
-					unsigned char chWidth,unsigned char chHeight);
-
+void Paint_BmpWindows(unsigned char x, unsigned char y, const unsigned char *pBmp, unsigned char chWidth, unsigned char chHeight);
 
 #endif
-
-
-
-
-

@@ -4,12 +4,12 @@ set(CMAKE_CXX_COMPILER /usr/bin/arm-none-eabi-g++)
 
 ###### Waveshare Pico_code/c/lib/GUI for graphics
 set(PICO_CODE_LIB ${CMAKE_SOURCE_DIR}/src/lib)
-add_subdirectory(${PICO_CODE_LIB}/Config)
-add_subdirectory(${PICO_CODE_LIB}/GUI)
-include_directories(${PICO_CODE_LIB}/Config)
+include_directories(${PICO_CODE_LIB}/Platform/RP2040)
+include_directories(${PICO_CODE_LIB}/Driver/GC9A01)
 include_directories(${PICO_CODE_LIB}/Fonts)
 include_directories(${PICO_CODE_LIB}/LCD)
 include_directories(${PICO_CODE_LIB}/GUI)
+include_directories(${PICO_CODE_LIB}/Helper)
 ###### END Waveshare Pico_code/c/lib/GUI for graphics
 
 ###### zlib dependency to use libpng
@@ -46,8 +46,6 @@ configure_file(${PNG_LIB}/scripts/pnglibconf.h.prebuilt ${PNG_LIB}/pnglibconf.h)
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-    pico_stdlib
+    pico_stdlib hardware_spi hardware_i2c hardware_pwm hardware_adc
     FatFs_SPI
-    GUI
-    Config
     png_static)
