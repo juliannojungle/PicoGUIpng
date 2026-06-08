@@ -143,7 +143,7 @@ void DisplayPng(FIL *file) {
             SPIWriteByte(((green & 0b00011100) << 3) | ((blue & 0b11111000) >> 3));
         }
 
-        free(row_pointers);
+        png_free(png_ptr, row_pointers);
         row_pointers = NULL;
     }
 
