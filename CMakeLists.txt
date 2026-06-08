@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 # initialization
 # set(PICO_SDK_FETCH_FROM_GIT ON)
 # set(PICO_SDK_PATH path/to/pico-sdk)
-set(PICO_SDK_PATH ~/pico-sdk-sdcard-lcd-png/src/Dependency/pico-sdk)
+set(PICO_SDK_PATH ~/pico-sdk)
 include(${CMAKE_SOURCE_DIR}/src/Dependency/pico_sdk_import.cmake)
 
 # project definition

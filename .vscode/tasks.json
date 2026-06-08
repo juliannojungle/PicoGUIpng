@@ -1,0 +1,77 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Copy to Windows",
+            "type": "shell",
+            "command": "wsl",
+            "args": [
+                "-e", "bash", "-c",
+                "cp ~/PicoGUIpng/build/picoguipng.uf2 /mnt/c/temp"
+            ],
+            "options": {
+                "cwd": "C:\\"
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build: Full",
+            "type": "shell",
+            "command": "wsl",
+            "args": [
+                "-e", "bash", "-c",
+                "cd ~/PicoGUIpng && rm -rf build && mkdir build && cd build && cmake .. && make"
+            ],
+            "options": {
+                "cwd": "C:\\"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Build: Full + Copy",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Build: Full", "Copy to Windows"],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build: Incremental",
+            "type": "shell",
+            "command": "wsl",
+            "args": [
+                "-e", "bash", "-c",
+                "cd ~/PicoGUIpng/build && make"
+            ],
+            "options": {
+                "cwd": "C:\\"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Build: Incremental + Copy",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Build: Incremental", "Copy to Windows"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
