@@ -46,6 +46,6 @@ configure_file(${PNG_LIB}/scripts/pnglibconf.h.prebuilt ${PNG_LIB}/pnglibconf.h)
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-    pico_stdlib hardware_spi hardware_i2c hardware_pwm hardware_adc
-    FatFs_SPI
+    pico_stdlib hardware_spi hardware_gpio hardware_i2c hardware_pwm hardware_adc
+    fatfs
     png_static)

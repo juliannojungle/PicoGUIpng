@@ -1,9 +1,3 @@
-[submodule "src/Dependency/no-OS-FatFS"]
-	path = src/Dependency/no-OS-FatFS
-	url = https://github.com/carlk3/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico.git
-	branch = main
-	shallow = true
-	ignore = all
 [submodule "src/Dependency/libpng"]
 	path = src/Dependency/libpng
 	url = https://github.com/glennrp/libpng.git
@@ -12,5 +6,10 @@
 [submodule "src/Dependency/zlib"]
 	path = src/Dependency/zlib
 	url = https://github.com/madler/zlib.git
+	shallow = true
+	ignore = all
+[submodule "src/Dependency/fatfs"]
+	path = src/Dependency/fatfs
+	url = https://github.com/abbrev/fatfs.git
 	shallow = true
 	ignore = all
