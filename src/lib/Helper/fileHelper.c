@@ -5,18 +5,64 @@
 #include <stdbool.h>
 #include <string.h>
 #include "ff.h"
-#include "platform_config.h"
+#include "sd_config.h"
+
+/* -----------------------------------------------------------------------
+ * Default SPI and SD card configuration.
+ * Users can expand these arrays to support multiple SPIs / SD cards.
+ * ----------------------------------------------------------------------- */
+
+static spi_t spis[] = {  // One for each SPI.
+    {
+        .hw_inst = spi0,
+        .miso_gpio = 16,
+        .mosi_gpio = 19,
+        .sck_gpio = 18,
+        .baud_rate = 25 * 1000 * 1000
+    }
+};
+
+static sd_card_t sd_cards[] = {  // One for each SD card.
+    {
+        .pcName = "0:",             // Name used to mount device
+        .type = SD_IF_SPI,
+        .spi_if.spi = &spis[0],    // Pointer to the SPI driver
+        .spi_if.ss_gpio = 17,      // The SPI slave select GPIO
+        .use_card_detect = true,
+        .card_detect_gpio = 20,    // Card detect GPIO
+        .card_detected_true = 0    // What the GPIO reads when card is present
+    }
+};
+
+/* BEGIN no-OS-FatFS-compatible implementations */
+
+size_t sd_get_num(void) {
+    return count_of(sd_cards);
+}
+
+sd_card_t *sd_get_by_num(size_t num) {
+    if (num < sd_get_num()) {
+        return &sd_cards[num];
+    } else {
+        return NULL;
+    }
+}
+
+/* END no-OS-FatFS-compatible implementations */
+
+/* -----------------------------------------------------------------------
+ * File system helper functions (parametrized by sd_card_t)
+ * ----------------------------------------------------------------------- */
 
 static FATFS fatfs;
-static const char* sd_drive = "0:";
 
-bool MountSdCard(void) {
+bool MountSdCard(sd_card_t *sdcard) {
     if (!Platform_SDCard_Init()) {
         printf("Platform_SDCard_Init failed\n");
         return false;
     }
 
-    FRESULT result = f_mount(&fatfs, sd_drive, 1);
+    FRESULT result = f_mount(&fatfs, sdcard->pcName, 1);
     if (result != FR_OK) {
         printf("f_mount error: %d\n", result);
         return false;
@@ -24,21 +70,21 @@ bool MountSdCard(void) {
     return true;
 }
 
-bool SelectActiveDrive(void) {
-    FRESULT result = f_chdrive(sd_drive);
+bool SelectActiveDrive(sd_card_t *sdcard) {
+    FRESULT result = f_chdrive(sdcard->pcName);
     if (result != FR_OK) {
         printf("f_chdrive error: %d\n", result);
-        f_unmount(sd_drive);
+        f_unmount(sdcard->pcName);
         return false;
     }
     return true;
 }
 
-bool OpenFile(FIL *file, const char *filename) {
+bool OpenFile(sd_card_t *sdcard, FIL *file, const char *filename) {
     FRESULT result = f_open(file, filename, FA_OPEN_EXISTING | FA_READ);
     if (result != FR_OK && result != FR_EXIST) {
         printf("f_open(%s) error: %d\n", filename, result);
-        f_unmount(sd_drive);
+        f_unmount(sdcard->pcName);
         return false;
     }
     return true;
@@ -51,8 +97,8 @@ void CloseFile(FIL *file) {
     }
 }
 
-void UnMountSdCard(void) {
-    f_unmount(sd_drive);
+void UnMountSdCard(sd_card_t *sdcard) {
+    f_unmount(sdcard->pcName);
 }
 
 #endif

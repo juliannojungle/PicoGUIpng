@@ -1,6 +1,5 @@
 #include "Platform.c"
 #include "rtc.h" // rtc for file's timestamp.
-#include "f_util.h" // FS functions and declarations.
 
 #include "fileHelper.c"
 #include "pngHelper.c"
