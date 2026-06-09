@@ -43,7 +43,7 @@
             "command": "wsl",
             "args": [
                 "-e", "bash", "-c",
-                "cd ~/PicoGUIpng && rm -rf build && mkdir build && cd build && cmake .. -DPLATFORM_NAME=ESP32 && make"
+                "source ~/esp-idf/export.sh && cd ~/PicoGUIpng && rm -rf build && idf.py -DPLATFORM_NAME=ESP32 build"
             ],
             "options": {
                 "cwd": "C:\\"
@@ -62,7 +62,7 @@
             "command": "wsl",
             "args": [
                 "-e", "bash", "-c",
-                "cd ~/PicoGUIpng/build && make"
+                "cd ~/PicoGUIpng/build && if [ -f build.ninja ]; then source ~/esp-idf/export.sh 2>/dev/null && ninja; else make; fi"
             ],
             "options": {
                 "cwd": "C:\\"
@@ -83,8 +83,7 @@
             "type": "shell",
             "command": "wsl",
             "args": [
-                "-e", "bash", "-c",
-                "set -e && echo '=== Installing ESP32 toolchain ===' && sudo apt-get update && sudo apt-get install -y git wget flex bison gperf cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 && echo '--- Downloading xtensa-esp32-elf toolchain ---' && mkdir -p ~/esp && cd ~/esp && wget -q --show-progress https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20240530/xtensa-esp-elf-13.2.0_20240530-x86_64-linux-gnu.tar.xz -O xtensa-esp-elf.tar.xz && tar xf xtensa-esp-elf.tar.xz && rm xtensa-esp-elf.tar.xz && echo '--- Cloning ESP-IDF (v5.3 stable) ---' && cd ~ && git clone --depth 1 --branch v5.3 https://github.com/espressif/esp-idf.git ~/esp-idf && echo '--- Adding toolchain to PATH ---' && echo 'export PATH=$HOME/esp/xtensa-esp-elf/bin:$PATH' >> ~/.bashrc && echo 'export ESP_IDF_PATH=$HOME/esp-idf' >> ~/.bashrc && echo '--- Installing espflash (Rust-based, no Python) ---' && if command -v cargo &>/dev/null; then cargo install espflash; else echo \"[SKIP] cargo not found. Install Rust (curl --proto =https --tlsv1.2 -sSf https://sh.rustup.rs | sh) then run: cargo install espflash\"; fi && echo '=== Done! Restart terminal or run: source ~/.bashrc ==='"
+                "-e", "bash", "-c", "~/PicoGUIpng/toolchain/ESP32/setup.sh"
             ],
             "options": {
                 "cwd": "C:\\"
@@ -101,8 +100,7 @@
             "type": "shell",
             "command": "wsl",
             "args": [
-                "-e", "bash", "-c",
-                "set -e && echo '=== Installing RP2040 toolchain ===' && sudo apt-get update && sudo apt-get install -y git cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential libstdc++-arm-none-eabi-newlib && echo '--- Cloning Pico SDK ---' && if [ ! -d ~/pico-sdk ]; then git clone --depth 1 https://github.com/raspberrypi/pico-sdk.git ~/pico-sdk && cd ~/pico-sdk && git submodule update --init; else echo 'pico-sdk already exists at ~/pico-sdk'; fi && echo '--- Adding PICO_SDK_PATH to environment ---' && grep -q 'PICO_SDK_PATH' ~/.bashrc || echo 'export PICO_SDK_PATH=$HOME/pico-sdk' >> ~/.bashrc && echo '=== Done! Restart terminal or run: source ~/.bashrc ==='"
+                "-e", "bash", "-c", "$HOME/PicoGUIpng/toolchain/RP2040/setup.sh"
             ],
             "options": {
                 "cwd": "C:\\"

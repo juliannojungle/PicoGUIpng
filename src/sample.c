@@ -4,7 +4,7 @@
 #include "fileHelper.c"
 #include "pngHelper.c"
 
-int main(void) {
+void app_entry(void) {
     STDIOInitAll();
     time_init();
 
@@ -29,3 +29,14 @@ int main(void) {
     while(true) {
     }
 }
+
+#ifdef ESP_PLATFORM
+void app_main(void) {
+    app_entry();
+}
+#else
+int main(void) {
+    app_entry();
+    return 0;
+}
+#endif
