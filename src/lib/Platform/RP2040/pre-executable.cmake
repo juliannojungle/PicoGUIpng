@@ -1,6 +1,9 @@
 # Compile FatFS puro (ChaN)
 set(FATFS_SRC ${CMAKE_SOURCE_DIR}/src/Dependency/fatfs/source)
 
+# Aplica patch no ffconf.h (FF_FS_RPATH=1, FF_VOLUMES=2)
+include(${CMAKE_SOURCE_DIR}/src/Dependency/fatfs.ffconf_patch.cmake)
+
 add_library(fatfs STATIC
     ${FATFS_SRC}/ff.c
     ${FATFS_SRC}/ffsystem.c

@@ -4,6 +4,9 @@ set(ZLIB_SRC ${PROJ_ROOT}/src/Dependency/zlib)
 set(PNG_SRC ${PROJ_ROOT}/src/Dependency/libpng)
 set(PLATFORM_SRC ${PROJ_ROOT}/src/lib/Platform/ESP32)
 
+# Aplica patch no ffconf.h (FF_FS_RPATH=1, FF_VOLUMES=2)
+include(${PROJ_ROOT}/src/Dependency/fatfs.ffconf_patch.cmake)
+
 idf_component_register(
     SRCS
         "${PROJ_ROOT}/src/sample.c"
