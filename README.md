@@ -4,7 +4,7 @@
 
 A lightweight, bare-metal GUI library for embedded systems. Draws visual elements directly on a GC9A01 round LCD (240×240) and renders PNG images streamed from an SD card — all with minimal memory footprint, no OS, no heap allocations in the critical path.
 
-Currently supports **[RP2040](https://www.waveshare.com/wiki/RP2040-LCD-1.28)** (Raspberry Pi Pico) and **[ESP32](https://www.waveshare.com/wiki/ESP32-S3-LCD-1.28)** from a single codebase.
+Currently supports **[RP2040-LCD-1.28](https://www.waveshare.com/wiki/RP2040-LCD-1.28)** (RP2040 Raspberry Pi Pico) and **[ESP32-S3-LCD-1.28](https://www.waveshare.com/wiki/ESP32-S3-LCD-1.28)** (ESP32 S3) from a single codebase.
 
 ---
 
