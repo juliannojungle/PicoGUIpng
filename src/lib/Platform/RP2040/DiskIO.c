@@ -5,7 +5,7 @@
 
 #include "ff.h"
 #include "diskio.h"
-#include "platform_config.h"
+#include "HALConfig.h"
 
 #ifndef DISKIO_TEST_MODE
 #include "hardware/spi.h"

@@ -1,5 +1,5 @@
 #include "GUI_Paint.h"
-#include "Platform.c"
+#include "HAL.c"
 #include "Debug.h"
 #include <stdint.h>
 #include <stdlib.h>

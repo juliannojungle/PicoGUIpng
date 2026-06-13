@@ -1,5 +1,5 @@
-#ifndef _PLATFORM_C_
-#define _PLATFORM_C_
+#ifndef _HAL_C_
+#define _HAL_C_
 
 #include "pico/stdlib.h"
 #include "hardware/spi.h"

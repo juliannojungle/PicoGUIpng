@@ -14,7 +14,7 @@
 #ifndef __LCD_1IN28_H
 #define __LCD_1IN28_H
 
-#include "Platform.c"
+#include "HAL.c"
 #include "Driver.c"
 #include <stdint.h>
 #include <stdlib.h> //itoa()

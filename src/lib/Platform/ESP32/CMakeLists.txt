@@ -1,4 +1,9 @@
 set(PROJ_ROOT ${CMAKE_SOURCE_DIR})
+# Fallback: if CMAKE_SOURCE_DIR doesn't point to project root (ESP-IDF context),
+# derive it from this file's location (src/lib/Platform/ESP32/CMakeLists.txt)
+if(NOT EXISTS "${PROJ_ROOT}/src/Dependency/fatfs.ffconf_patch.cmake")
+    get_filename_component(PROJ_ROOT "${CMAKE_CURRENT_LIST_DIR}/../../../.." ABSOLUTE)
+endif()
 set(FATFS_SRC ${PROJ_ROOT}/src/Dependency/fatfs/source)
 set(ZLIB_SRC ${PROJ_ROOT}/src/Dependency/zlib)
 set(PNG_SRC ${PROJ_ROOT}/src/Dependency/libpng)
@@ -9,11 +14,11 @@ include(${PROJ_ROOT}/src/Dependency/fatfs.ffconf_patch.cmake)
 
 idf_component_register(
     SRCS
-        "${PROJ_ROOT}/src/sample.c"
+        "${PROJ_ROOT}/src/Sample.c"
         "${FATFS_SRC}/ff.c"
         "${FATFS_SRC}/ffsystem.c"
         "${FATFS_SRC}/ffunicode.c"
-        "${PLATFORM_SRC}/diskio.c"
+        "${PLATFORM_SRC}/DiskIO.c"
         # zlib
         "${ZLIB_SRC}/adler32.c"
         "${ZLIB_SRC}/compress.c"

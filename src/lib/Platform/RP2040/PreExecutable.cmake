@@ -8,7 +8,7 @@ add_library(fatfs STATIC
     ${FATFS_SRC}/ff.c
     ${FATFS_SRC}/ffsystem.c
     ${FATFS_SRC}/ffunicode.c
-    ${CMAKE_SOURCE_DIR}/src/lib/Platform/RP2040/diskio.c
+    ${CMAKE_SOURCE_DIR}/src/lib/Platform/RP2040/DiskIO.c
 )
 
 target_include_directories(fatfs PUBLIC

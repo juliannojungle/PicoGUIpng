@@ -1,18 +1,18 @@
 #ifndef _SD_HW_CONFIG_H_
 #define _SD_HW_CONFIG_H_
 
-#include "sd_config.h"
+#include "SDConfig.h"
 
 /* -----------------------------------------------------------------------
- * Default SPI and SD card configuration for ESP32.
+ * Default SPI and SD card configuration for RP2040.
  * Users can expand these arrays to support multiple SPIs / SD cards.
  * ----------------------------------------------------------------------- */
 
 static spi_t spis[] = {  // One for each SPI.
     {
-        .host_id = 2,           // SPI2_HOST
-        .miso_gpio = 19,
-        .mosi_gpio = 23,
+        .hw_inst = spi0,
+        .miso_gpio = 16,
+        .mosi_gpio = 19,
         .sck_gpio = 18,
         .baud_rate = 25 * 1000 * 1000
     }
@@ -23,9 +23,9 @@ static sd_card_t sd_cards[] = {  // One for each SD card.
         .pcName = "0:",             // Name used to mount device
         .type = SD_IF_SPI,
         .spi_if.spi = &spis[0],    // Pointer to the SPI driver
-        .spi_if.ss_gpio = 5,       // The SPI slave select GPIO
+        .spi_if.ss_gpio = 17,      // The SPI slave select GPIO
         .use_card_detect = true,
-        .card_detect_gpio = 21,    // Card detect GPIO
+        .card_detect_gpio = 20,    // Card detect GPIO
         .card_detected_true = 0    // What the GPIO reads when card is present
     }
 };

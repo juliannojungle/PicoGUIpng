@@ -83,7 +83,7 @@
             "type": "shell",
             "command": "wsl",
             "args": [
-                "-e", "bash", "-c", "~/PicoGUIpng/toolchain/ESP32/setup.sh"
+                "-e", "bash", "-c", "~/PicoGUIpng/Toolchain/ESP32/Setup.sh"
             ],
             "options": {
                 "cwd": "C:\\"
@@ -100,7 +100,7 @@
             "type": "shell",
             "command": "wsl",
             "args": [
-                "-e", "bash", "-c", "$HOME/PicoGUIpng/toolchain/RP2040/setup.sh"
+                "-e", "bash", "-c", "$HOME/PicoGUIpng/Toolchain/RP2040/Setup.sh"
             ],
             "options": {
                 "cwd": "C:\\"

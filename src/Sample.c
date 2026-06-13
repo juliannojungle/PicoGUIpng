@@ -1,8 +1,8 @@
-#include "Platform.c"
-#include "rtc.h" // rtc for file's timestamp.
+#include "HAL.c"
+#include "RTC.h" // rtc for file's timestamp.
 
-#include "fileHelper.c"
-#include "pngHelper.c"
+#include "FileHelper.c"
+#include "PNGHelper.c"
 
 void app_entry(void) {
     STDIOInitAll();

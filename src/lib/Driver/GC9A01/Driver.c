@@ -29,8 +29,6 @@
 #ifndef _DRIVER_C_
 #define _DRIVER_C_
 
-// #include "Driver.h"
-
 // GPIO
 int EPD_RST_PIN;
 int EPD_DC_PIN;

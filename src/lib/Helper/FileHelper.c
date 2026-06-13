@@ -5,9 +5,9 @@
 #include <stdbool.h>
 #include <string.h>
 #include "ff.h"
-#include "sd_config.h"
-#include "sd_hw_config.h" // Platform-specific default SPI/SD arrays + sd_get_num/sd_get_by_num
-#include "platform_config.h" // Platform_SDCard_Init declaration
+#include "SDConfig.h"
+#include "SDHWConfig.h" // Platform-specific default SPI/SD arrays + sd_get_num/sd_get_by_num
+#include "HALConfig.h" // Platform_SDCard_Init declaration
 
 /* -----------------------------------------------------------------------
  * File system helper functions (parametrized by sd_card_t)

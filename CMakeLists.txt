@@ -29,11 +29,11 @@ else() # RP2040 (default)
     pico_sdk_init()
 
     # Incluir fragmentos de plataforma
-    include(${CMAKE_SOURCE_DIR}/src/lib/Platform/RP2040/pre-executable.cmake)
+    include(${CMAKE_SOURCE_DIR}/src/lib/Platform/RP2040/PreExecutable.cmake)
 
-    add_executable(${PROJECT_NAME} src/sample.c)
+    add_executable(${PROJECT_NAME} src/Sample.c)
 
-    include(${CMAKE_SOURCE_DIR}/src/lib/Platform/RP2040/pos-executable.cmake)
+    include(${CMAKE_SOURCE_DIR}/src/lib/Platform/RP2040/PostExecutable.cmake)
 
     pico_enable_stdio_usb(${PROJECT_NAME} 1)  # enable usb output
     pico_enable_stdio_uart(${PROJECT_NAME} 0) # disable uart output

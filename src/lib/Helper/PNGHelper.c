@@ -7,7 +7,7 @@
 #define PNG_READ_SUPPORTED
 
 #include "Driver.c"
-#include "Platform.c"
+#include "HAL.c"
 #include "LCD_1in28.c"
 #include "font20.c"
 #include "GUI_Paint.h"

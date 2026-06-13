@@ -1,5 +1,5 @@
-#ifndef _PLATFORM_C_
-#define _PLATFORM_C_
+#ifndef _HAL_C_
+#define _HAL_C_
 
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
