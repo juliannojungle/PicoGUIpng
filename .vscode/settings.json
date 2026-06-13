@@ -1,7 +1,9 @@
 {
+  "editor.indentSize": 4,
   "files.associations": {
     "*.h": "c",
     "*.c": "c"
   },
-  "editor.indentSize": 4
+  "git.detectSubmodules": false,
+  "git.autoRepositoryDetection": "openEditors"
 }
