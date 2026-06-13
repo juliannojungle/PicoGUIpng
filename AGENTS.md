@@ -156,7 +156,7 @@ fi
 
 ### DO NOT modify submodule contents directly
 
-All dependencies are git submodules with `update = none` and `ignore = all`:
+All dependencies are git submodules with `ignore = all`:
 - `src/Dependency/fatfs` — ChaN FatFS
 - `src/Dependency/libpng` — libpng
 - `src/Dependency/zlib` — zlib
@@ -173,8 +173,7 @@ All dependencies are git submodules with `update = none` and `ignore = all`:
 
 ### Rationale
 - Submodules stay at pinned commits (shallow clones)
-- `update = none` prevents accidental updates via `git submodule update --remote`
-- Patches are idempotent (safe to re-run, use regex replace)
+- `ignore = all` prevents git from showing false "modified" status inside submodules
 - Anyone cloning the repo gets a working build without manual intervention
 
 ---

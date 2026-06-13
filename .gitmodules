@@ -3,16 +3,13 @@
 	url = https://github.com/glennrp/libpng.git
 	shallow = true
 	ignore = all
-	update = none
 [submodule "src/Dependency/zlib"]
 	path = src/Dependency/zlib
 	url = https://github.com/madler/zlib.git
 	shallow = true
 	ignore = all
-	update = none
 [submodule "src/Dependency/fatfs"]
 	path = src/Dependency/fatfs
 	url = https://github.com/abbrev/fatfs.git
 	shallow = true
 	ignore = all
-	update = none
