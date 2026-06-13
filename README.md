@@ -30,6 +30,38 @@ Currently supports **RP2040** (Raspberry Pi Pico) and **ESP32** from a single co
 
 ---
 
+## 🛒 B.O.M. (Bill Of Materials)
+
+* One of the target devices:
+  * [RP2040-LCD-1.28](https://www.waveshare.com/wiki/RP2040-LCD-1.28)
+  * [ESP32-S3-LCD-1.28](https://www.waveshare.com/wiki/ESP32-S3-LCD-1.28)
+* MicroSD to SD card adapter (for easy soldering)
+* MicroSD card
+* Some nice wires (30 AWG recommended)
+* 2 x 10K resistors (for pull-up)
+* 1 x 10uF capacitor (for decoupling)
+* *(Optional)* 2 x [1.27mm 2x20Pin header](https://ae01.alicdn.com/kf/H874df6c6359144e497abad3f5e2a03c6b.jpg_220x220.jpg) (for connecting SD to target device)
+
+---
+
+## 🔌 Wiring
+
+Soon...
+
+---
+
+## 📋 Software Requirements
+
+- **Host**: Linux or Windows 10 PC with [WSL 2 (Windows Subsystem Linux)](https://learn.microsoft.com/pt-br/windows/wsl/install) - Ubuntu is recommended — code edited on Windows, compiled inside WSL
+- **IDE**: [Kiro](https://kiro.dev) or [VSCode](https://code.visualstudio.com/)
+- **RP2040**: arm-none-eabi-gcc, Pico SDK (installed via `Setup: RP2040 toolchain`)
+- **ESP32**: ESP-IDF ≥ 5.x, xtensa toolchain, espflash (installed via `Setup: ESP32 toolchain`)
+- **CMake** ≥ 3.16
+
+> The preferred IDE is **[Kiro](https://kiro.dev)**, which provides agent-assisted development with project-aware context via `AGENTS.md`. The project also works fully with **VS Code** — all tasks and settings are configured in `.vscode/`.
+
+---
+
 ## 🏗️ Architecture
 
 ```
@@ -185,21 +217,6 @@ Once the toolchain is ready, build using the tasks:
 | `Copy UF2 to Windows` | Copies `.uf2` to `C:\temp` for drag-and-drop flashing |
 
 Alternatively, trigger the default build task directly with `Ctrl+Shift+B` (runs **Build: Incremental**).
-
----
-
-## 💡 IDE
-
-The preferred IDE is **[Kiro](https://kiro.dev)**, which provides agent-assisted development with project-aware context via `AGENTS.md`. The project also works fully with **VS Code** — all tasks and settings are configured in `.vscode/`.
-
----
-
-## 📋 Requirements
-
-- **Host**: Windows + WSL (Ubuntu) — code edited on Windows, compiled inside WSL
-- **RP2040**: arm-none-eabi-gcc, Pico SDK (installed via `Setup: RP2040 toolchain`)
-- **ESP32**: ESP-IDF ≥ 5.x, xtensa toolchain, espflash (installed via `Setup: ESP32 toolchain`)
-- **CMake** ≥ 3.16
 
 ---
 
