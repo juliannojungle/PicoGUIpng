@@ -2,7 +2,7 @@
 
 ## Overview
 
-Refatorar o PicoGUIpng de mono-plataforma (RP2040 com no-OS-FatFS) para multi-plataforma (RP2040 + ESP32) usando FatFS puro de ChaN. O plano segue uma abordagem incremental: primeiro a infraestrutura (submódulo, diretórios, configuração), depois as implementações de plataforma, refatoração do código de aplicação, sistema de build, e finalmente testes.
+Refatorar o gui.ll de mono-plataforma (RP2040 com no-OS-FatFS) para multi-plataforma (RP2040 + ESP32) usando FatFS puro de ChaN. O plano segue uma abordagem incremental: primeiro a infraestrutura (submódulo, diretórios, configuração), depois as implementações de plataforma, refatoração do código de aplicação, sistema de build, e finalmente testes.
 
 ## Tasks
 

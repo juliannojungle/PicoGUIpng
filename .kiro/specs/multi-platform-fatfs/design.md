@@ -2,7 +2,7 @@
 
 ## Overview
 
-Este design descreve a refatoração do PicoGUIpng de uma arquitetura mono-plataforma (RP2040 com `no-OS-FatFS`) para multi-plataforma (RP2040 + ESP32) usando o FatFS puro de ChaN. A mudança central é substituir o submódulo `no-OS-FatFS` — que embute lógica SPI/SD específica para RP2040 — pelo FatFS genérico, implementando a interface `diskio.h` separadamente para cada plataforma.
+Este design descreve a refatoração do gui.ll de uma arquitetura mono-plataforma (RP2040 com `no-OS-FatFS`) para multi-plataforma (RP2040 + ESP32) usando o FatFS puro de ChaN. A mudança central é substituir o submódulo `no-OS-FatFS` — que embute lógica SPI/SD específica para RP2040 — pelo FatFS genérico, implementando a interface `diskio.h` separadamente para cada plataforma.
 
 O projeto é uma **biblioteca/subprojeto** (não um aplicativo standalone). O `CMakeLists.txt` raiz é um exemplo funcional para o projeto pai, que inclui fragmentos `.cmake` da plataforma selecionada.
 
@@ -217,7 +217,7 @@ elseif(PLATFORM_NAME STREQUAL "ESP32")
     endif()
 endif()
 
-project(picoguipng)
+project(gui.ll)
 
 # Inicialização específica da plataforma
 if(PLATFORM_NAME STREQUAL "RP2040")

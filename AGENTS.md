@@ -2,7 +2,7 @@
 
 ## Overview
 
-**PicoGUIpng** is a multi-platform embedded C project that reads PNG files from an SD card
+**gui.ll** is a multi-platform embedded C project that reads PNG files from an SD card
 and displays them on a GC9A01 round LCD (240x240). It targets **RP2040** (Raspberry Pi Pico)
 and **ESP32** from a single codebase with platform-specific abstractions.
 
@@ -11,7 +11,7 @@ and **ESP32** from a single codebase with platform-specific abstractions.
 ## Project Structure
 
 ```
-PicoGUIpng/
+gui.ll/
 ├── CMakeLists.txt                  # Root cmake: if/else by PLATFORM_NAME
 ├── AGENTS.md                       # This file
 ├── .gitmodules                     # Submodule config (all locked with update=none)
@@ -143,7 +143,7 @@ Each platform provides `RTC.h` with:
 
 The "Build: Incremental" task auto-detects the platform:
 ```bash
-cd ~/PicoGUIpng/build && if [ -f build.ninja ]; then
+cd ~/gui.ll/build && if [ -f build.ninja ]; then
     source ~/esp-idf/export.sh 2>/dev/null && ninja
 else
     make

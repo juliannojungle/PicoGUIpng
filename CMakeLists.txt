@@ -14,7 +14,7 @@ if(PLATFORM_NAME STREQUAL "ESP32")
         "${CMAKE_SOURCE_DIR}/src/lib/Platform/ESP32"
     )
     include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-    project(picoguipng)
+    project(gui.ll)
 
 else() # RP2040 (default)
     set(CMAKE_C_STANDARD 11)
@@ -25,7 +25,7 @@ else() # RP2040 (default)
     endif()
     include(${CMAKE_SOURCE_DIR}/src/Dependency/pico_sdk_import.cmake)
 
-    project(picoguipng)
+    project(gui.ll)
     pico_sdk_init()
 
     # Include platform-specific cmake fragments

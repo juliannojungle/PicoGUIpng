@@ -7,7 +7,7 @@
             "command": "wsl",
             "args": [
                 "-e", "bash", "-c",
-                "cp ~/PicoGUIpng/build/picoguipng.uf2 /mnt/c/temp"
+                "cp ~/gui.ll/build/gui.ll.uf2 /mnt/c/temp"
             ],
             "options": {
                 "cwd": "C:\\"
@@ -24,7 +24,7 @@
             "command": "wsl",
             "args": [
                 "-e", "bash", "-c",
-                "cd ~/PicoGUIpng && rm -rf build && mkdir build && cd build && cmake .. -DPLATFORM_NAME=RP2040 && make"
+                "cd ~/gui.ll && rm -rf build && mkdir build && cd build && cmake .. -DPLATFORM_NAME=RP2040 && make"
             ],
             "options": {
                 "cwd": "C:\\"
@@ -43,7 +43,7 @@
             "command": "wsl",
             "args": [
                 "-e", "bash", "-c",
-                "source ~/esp-idf/export.sh && cd ~/PicoGUIpng && rm -rf build && idf.py -DPLATFORM_NAME=ESP32 build"
+                "source ~/esp-idf/export.sh && cd ~/gui.ll && rm -rf build && idf.py -DPLATFORM_NAME=ESP32 build"
             ],
             "options": {
                 "cwd": "C:\\"
@@ -62,7 +62,7 @@
             "command": "wsl",
             "args": [
                 "-e", "bash", "-c",
-                "cd ~/PicoGUIpng/build && if [ -f build.ninja ]; then source ~/esp-idf/export.sh 2>/dev/null && ninja; else make; fi"
+                "cd ~/gui.ll/build && if [ -f build.ninja ]; then source ~/esp-idf/export.sh 2>/dev/null && ninja; else make; fi"
             ],
             "options": {
                 "cwd": "C:\\"
@@ -83,7 +83,7 @@
             "type": "shell",
             "command": "wsl",
             "args": [
-                "-e", "bash", "-c", "~/PicoGUIpng/Toolchain/ESP32/Setup.sh"
+                "-e", "bash", "-c", "~/gui.ll/Toolchain/ESP32/Setup.sh"
             ],
             "options": {
                 "cwd": "C:\\"
@@ -100,7 +100,7 @@
             "type": "shell",
             "command": "wsl",
             "args": [
-                "-e", "bash", "-c", "$HOME/PicoGUIpng/Toolchain/RP2040/Setup.sh"
+                "-e", "bash", "-c", "$HOME/gui.ll/Toolchain/RP2040/Setup.sh"
             ],
             "options": {
                 "cwd": "C:\\"

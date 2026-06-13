@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Este documento descreve os requisitos para refatorar o projeto PicoGUIpng de uma arquitetura mono-plataforma (RP2040) para multi-plataforma, adicionando suporte ao ESP32. A refatoração substitui a dependência `no-OS-FatFS-SD-SDIO-SPI-RPi-Pico` (específica para RP2040) pelo FatFS puro de ChaN, implementando a interface `diskio.h` separadamente para cada plataforma-alvo via SPI. O código de aplicação (`fileHelper.c`, `pngHelper.c`, `sample.c`) deve permanecer inalterado quanto ao uso da API FatFS.
+Este documento descreve os requisitos para refatorar o projeto gui.ll de uma arquitetura mono-plataforma (RP2040) para multi-plataforma, adicionando suporte ao ESP32. A refatoração substitui a dependência `no-OS-FatFS-SD-SDIO-SPI-RPi-Pico` (específica para RP2040) pelo FatFS puro de ChaN, implementando a interface `diskio.h` separadamente para cada plataforma-alvo via SPI. O código de aplicação (`fileHelper.c`, `pngHelper.c`, `sample.c`) deve permanecer inalterado quanto ao uso da API FatFS.
 
 ## Glossary
 
@@ -22,7 +22,7 @@ Este documento descreve os requisitos para refatorar o projeto PicoGUIpng de uma
 
 ### Requirement 1: Substituição da dependência no-OS-FatFS pelo FatFS puro
 
-**User Story:** Como desenvolvedor do PicoGUIpng, quero substituir o submódulo `no-OS-FatFS` pelo FatFS puro de ChaN, para que a camada de filesystem seja portável e não dependa de uma implementação específica para RP2040.
+**User Story:** Como desenvolvedor do gui.ll, quero substituir o submódulo `no-OS-FatFS` pelo FatFS puro de ChaN, para que a camada de filesystem seja portável e não dependa de uma implementação específica para RP2040.
 
 #### Acceptance Criteria
 
