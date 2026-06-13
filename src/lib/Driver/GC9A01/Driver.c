@@ -106,7 +106,7 @@ UBYTE DriverInit(void) {
 }
 
 void DriverSetPWM(UBYTE value) {
-    if ((value < 0) || (value > 100)) {
+    if (value > 100) {
         printf("DriverSetPWM error\r\n");
     } else {
         PWMSetChannelLevel(slice_num, 1, value);

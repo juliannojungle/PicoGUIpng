@@ -9,7 +9,7 @@ set(ZLIB_SRC ${PROJ_ROOT}/src/Dependency/zlib)
 set(PNG_SRC ${PROJ_ROOT}/src/Dependency/libpng)
 set(PLATFORM_SRC ${PROJ_ROOT}/src/lib/Platform/ESP32)
 
-# Aplica patch no ffconf.h (FF_FS_RPATH=1, FF_VOLUMES=2)
+# Apply patch to ffconf.h (FF_FS_RPATH=1, FF_VOLUMES=2)
 include(${PROJ_ROOT}/src/Dependency/fatfs.ffconf_patch.cmake)
 
 idf_component_register(
@@ -61,18 +61,26 @@ idf_component_register(
         esp_system
 )
 
-# libpng precisa do pnglibconf.h gerado
+# Generate pnglibconf.h required by libpng (copied from prebuilt template)
 configure_file(
     ${PNG_SRC}/scripts/pnglibconf.h.prebuilt
     ${PNG_SRC}/pnglibconf.h
     COPYONLY
 )
 
-# Desabilitar -Werror para dependências de terceiros (libpng, zlib)
-# que geram warnings com o toolchain xtensa do ESP-IDF.
-# Usa target_compile_options no lib do componente para garantir que
-# -Wno-error vem depois de -Werror=all na linha de compilação.
+# Disable -Werror for third-party dependencies (libpng, zlib) that produce
+# warnings with the xtensa toolchain under ESP-IDF's strict -Werror=all.
+# Using target_compile_options ensures -Wno-error comes after -Werror=all.
 target_compile_options(${COMPONENT_LIB} PRIVATE
     -Wno-error=maybe-uninitialized
     -Wno-error=unused-but-set-variable
+)
+
+# Suppress -Wmaybe-uninitialized specifically for libpng files that produce
+# false positives when GCC analyzes data flow through macros (PNG_FORMAT_NUMBER).
+# The code is correct — this is a static analysis limitation of the compiler.
+set_source_files_properties(
+    "${PNG_SRC}/pngerror.c"
+    "${PNG_SRC}/png.c"
+    PROPERTIES COMPILE_OPTIONS "-Wno-maybe-uninitialized"
 )

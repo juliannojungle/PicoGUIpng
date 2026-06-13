@@ -1,15 +1,15 @@
 # version requirements
 cmake_minimum_required(VERSION 3.16)
 
-# Seleção de plataforma
+# Platform selection
 if(NOT DEFINED PLATFORM_NAME)
     set(PLATFORM_NAME "RP2040")
 endif()
 
-# Build system por plataforma
+# Build system per platform
 if(PLATFORM_NAME STREQUAL "ESP32")
-    # ESP-IDF é o orquestrador do build.
-    # EXTRA_COMPONENT_DIRS permite adicionar nosso componente sem perder os do ESP-IDF.
+    # ESP-IDF orchestrates the build.
+    # EXTRA_COMPONENT_DIRS adds our component without losing ESP-IDF built-in components.
     set(EXTRA_COMPONENT_DIRS
         "${CMAKE_SOURCE_DIR}/src/lib/Platform/ESP32"
     )
@@ -28,7 +28,7 @@ else() # RP2040 (default)
     project(picoguipng)
     pico_sdk_init()
 
-    # Incluir fragmentos de plataforma
+    # Include platform-specific cmake fragments
     include(${CMAKE_SOURCE_DIR}/src/lib/Platform/RP2040/PreExecutable.cmake)
 
     add_executable(${PROJECT_NAME} src/Sample.c)

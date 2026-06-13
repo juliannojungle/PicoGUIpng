@@ -1,4 +1,4 @@
-# Compile FatFS puro (ChaN)
+# Compile FatFS (ChaN) as static library
 set(FATFS_SRC ${CMAKE_SOURCE_DIR}/src/Dependency/fatfs/source)
 
 add_library(fatfs STATIC
