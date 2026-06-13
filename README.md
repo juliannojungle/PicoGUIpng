@@ -46,7 +46,7 @@ Currently supports **RP2040** (Raspberry Pi Pico) and **ESP32** from a single co
 
 ## 🔌 Wiring
 
-| RP2040/ESP32 | R1(10K) | R2(10K) | C1(10uF) | SDCARD           |
+| RP2040       | R1(10K) | R2(10K) | C1(10uF) | SDCARD           |
 |--------------|---------|---------|----------|------------------|
 | GP19 (MOSI)  |         |         |          | pin2 (CMD/MOSI)  |
 | GP18 (SCLK)  |         |         |          | pin5 (CLK/SCK)   |
