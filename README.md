@@ -187,7 +187,7 @@ Your application entry point mirrors `Sample.c` — implement `app_entry()` and 
 ### 1. Clone with submodules
 
 ```bash
-git clone --recurse-submodules https://github.com/juliannojungle/gui.ll.git
+git clone --recurse-submodules --shallow-submodules https://github.com/juliannojungle/gui.ll.git
 ```
 
 This single command clones the repository and all bundled dependencies (FatFS, libpng, zlib) in one step. No separate dependency installation needed.
