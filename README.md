@@ -4,7 +4,7 @@
 
 A lightweight, bare-metal GUI library for embedded systems. Draws visual elements directly on a GC9A01 round LCD (240×240) and renders PNG images streamed from an SD card — all with minimal memory footprint, no OS, no heap allocations in the critical path.
 
-Currently supports **[RP2040-LCD-1.28](https://www.waveshare.com/wiki/RP2040-LCD-1.28)** (RP2040 Raspberry Pi Pico) and **[ESP32-S3-LCD-1.28](https://www.waveshare.com/wiki/ESP32-S3-LCD-1.28)** (ESP32 S3) from a single codebase.
+Currently supports **RP2040** (Raspberry Pi Pico) and **ESP32** from a single codebase.
 
 ---
 
@@ -21,10 +21,12 @@ Currently supports **[RP2040-LCD-1.28](https://www.waveshare.com/wiki/RP2040-LCD
 
 ## 🖥️ Supported Platforms
 
-| Platform | Toolchain | Output |
+| Platform | RP2040 | ESP32 |
 |---|---|---|
-| RP2040 (Raspberry Pi Pico) | arm-none-eabi-gcc + Pico SDK | `.uf2` |
-| ESP32 | xtensa-esp32-elf-gcc + ESP-IDF | `.bin` |
+| Pinout |<img alt="RP2040 LCD 1.28" src="Documentation\Image\RP2040_LCD_1_28.png" width="300px">|<img alt="ESP32-S3 LCD 1.28" src="Documentation\Image\ESP32_S3_LCD_1_28.png" width="300px">|
+| Device | [RP2040-LCD-1.28](https://www.waveshare.com/wiki/RP2040-LCD-1.28) | [ESP32-S3-LCD-1.28](https://www.waveshare.com/wiki/ESP32-S3-LCD-1.28) |
+| Toolchain | arm-none-eabi-gcc + Pico SDK | xtensa-esp32-elf-gcc + ESP-IDF |
+| Output | `.uf2` | `.bin` |
 
 ---
 
@@ -204,3 +206,6 @@ The preferred IDE is **[Kiro](https://kiro.dev)**, which provides agent-assisted
 ## 📄 License
 
 See [LICENSE](LICENSE).
+
+---
+<sup>[@juliannojungle](https://github.com/juliannojungle), 2026</sup>
