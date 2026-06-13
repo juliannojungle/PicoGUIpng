@@ -46,7 +46,69 @@ Currently supports **RP2040** (Raspberry Pi Pico) and **ESP32** from a single co
 
 ## 🔌 Wiring
 
-Soon...
+| RP2040/ESP32 | R1(10K) | R2(10K) | C1(10uF) | SDCARD           |
+|--------------|---------|---------|----------|------------------|
+| GP19 (MOSI)  |         |         |          | pin2 (CMD/MOSI)  |
+| GP18 (SCLK)  |         |         |          | pin5 (CLK/SCK)   |
+| GP17 (CS)    |   CS    |         |          | pin1 (DAT3/CS)   |
+| GP16 (MISO)  |         |  MISO   |          | pin7 (DAT0/MISO) |
+| 3V3          |   3V3   |  3V3    |   3V3    | pin4 (VDD/3V3)   |
+| GND          |         |         |   GND    | pin6 (VSS2/GND)  |
+| GND          |         |         |          | pin3 (VSS1/GND)  |
+
+---
+
+```mermaid
+graph LR
+    subgraph RP2040 / ESP32
+        GP19["GP19 (MOSI)"]
+        GP18["GP18 (SCLK)"]
+        GP17["GP17 (CS)"]
+        GP16["GP16 (MISO)"]
+        V33["3V3"]
+        GND["GND"]
+    end
+
+    subgraph R1["R1 (10K)"]
+        R1A["pin A"]
+        R1B["pin B"]
+    end
+
+    subgraph R2["R2 (10K)"]
+        R2A["pin A"]
+        R2B["pin B"]
+    end
+
+    subgraph C1["C1 (10uF)"]
+        C1P["\+ (anode)"]
+        C1N["\- (cathode)"]
+    end
+
+    subgraph SD["SD Card"]
+        VSS1["VSS1 (GND)"]
+        CMD["CMD (MOSI)"]
+        CLK["CLK (SCK)"]
+        DAT3["DAT3 (CS)"]
+        DAT0["DAT0 (MISO)"]
+        VDD["VDD (3V3)"]
+        VSS2["VSS2 (GND)"]
+    end
+
+    GP19 --> CMD
+    GP18 --> CLK
+    GP17 --> R1B
+    V33  --> R1A
+    V33  --> R2A
+    V33  --> VDD
+    R1B  --> DAT3
+    GP16 --> R2B
+    R2B  --> DAT0
+    V33  --> C1P
+    GND  --> C1N
+    GND  --> VSS2
+    GND  --> VSS1
+
+```
 
 ---
 
